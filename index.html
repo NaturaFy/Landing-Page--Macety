@@ -1,874 +1,672 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naturafy - Smart Plant Care</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f5f5;
-        }
-
-        /* Navigation */
-        nav {
-            background: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #2d5016;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover,
-        .nav-links a.active {
-            color: #4CAF50;
-        }
-
-        .download-btn {
-            background: #4CAF50;
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-
-        .download-btn:hover {
-            background: #45a049;
-        }
-
-        /* Language Selector */
-        .language-selector {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: 1px solid #ddd;
-            color: #666;
-            padding: 0.3rem 0.6rem;
-            border-radius: 15px;
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 500;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .lang-btn:hover {
-            background: #f0f0f0;
-            border-color: #4CAF50;
-        }
-
-        .lang-btn.active {
-            background: #4CAF50;
-            color: white;
-            border-color: #4CAF50;
-        }
-
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            margin-top: 80px;
-            animation: fadeIn 0.5s;
-            min-height: calc(100vh - 80px);
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Hero Section */
-        .hero {
-            background: url('./assets/home.png') center/cover no-repeat;
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            padding: 2rem;
-            align-items: center;
-        }
-
-        .hero-text h1 {
-            font-size: 3rem;
-            color: #2d5016;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-            font-weight: 700;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            color: #2d5016;
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: white;
-            color: #4CAF50;
-            padding: 1rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-            padding: 1rem 2rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            background: white;
-            color: #4CAF50;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .hero-image {
-            position: relative;
-        }
-
-        .plant-character {
-            width: 100%;
-            max-width: 400px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        /* Features Section */
-        .features-section {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #2d5016;
-            margin-bottom: 3rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: #e8f5e9;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-        }
-
-        .feature-card h3 {
-            color: #2d5016;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
-        }
-
-        .feature-card p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Community Section */
-        .community-section {
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            padding: 5rem 2rem;
-        }
-
-        .community-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .plant-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .plant-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .plant-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .plant-info {
-            padding: 1.5rem;
-        }
-
-        /* Contact Section */
-        .contact-section {
-            max-width: 800px;
-            margin: 4rem auto;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .contact-character {
-            width: 200px;
-            margin: 2rem auto;
-        }
-
-        .contact-info {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            margin-top: 2rem;
-        }
-
-        /* Footer */
-        footer {
-            background: #2d5016;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-
-        /* Transition Indicator */
-        .transition-indicator {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .transition-indicator.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .transition-circle {
-            width: 120px;
-            height: 120px;
-            background: rgba(45, 80, 22, 0.95);
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            animation: pulse 1.5s infinite;
-        }
-
-        .transition-circle .label {
-            font-size: 0.8rem;
-            margin-bottom: 0.2rem;
-            opacity: 0.8;
-        }
-
-        .transition-circle .section-name {
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-
-            .hero-text h1 {
-                font-size: 2rem;
-            }
-
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-translate="meta.title">Naturafy - Smart Plant Care</title>
+  <meta name="description" content="Tecnología que conecta con la naturaleza. Controla tu maceta inteligente desde la app y únete a un futuro más verde." data-translate="meta.description"/>
+  <style>
+    :root{
+      --green:#4CAF50;
+      --green-700:#2d5016;
+      --green-600:#4a7c59;
+      --earth:#8D6E63;
+      --bg:#f5f5f5;
+      --text:#333;
+      --muted:#666;
+      --shadow:0 10px 20px rgba(0,0,0,.12);
+      --radius:20px;
+      --ease:cubic-bezier(.4,0,.2,1);
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    /* NAV */
+    nav{background:#fff;padding:1rem 2rem;box-shadow:0 2px 10px rgba(0,0,0,.08);position:fixed;top:0;left:0;right:0;z-index:1000}
+    .nav-content{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .logo{font-size:1.35rem;font-weight:800;color:var(--green-700);letter-spacing:.3px}
+    .nav-links{display:flex;list-style:none;gap:1.25rem}
+    .nav-links a{color:#333;text-decoration:none;font-weight:600;opacity:.9;transition:color .25s var(--ease),opacity .25s var(--ease)}
+    .nav-links a:hover,.nav-links a.active{color:var(--green)}
+    .download-btn{background:var(--green);color:#fff;padding:.6rem 1.25rem;border-radius:999px;text-decoration:none;font-weight:700;box-shadow:0 6px 16px rgba(76,175,80,.35);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+    .download-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(76,175,80,.45)}
+    .language-selector{display:flex;gap:.45rem;align-items:center}
+    .lang-btn{background:transparent;border:1px solid #ddd;color:#666;padding:.35rem .6rem;border-radius:999px;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .25s var(--ease)}
+    .lang-btn:hover{background:#f3f3f3;border-color:var(--green)}
+    .lang-btn.active{background:var(--green);color:#fff;border-color:var(--green)}
+    /* TABS */
+    .tab-content{display:none;min-height:100vh;margin-top:80px;animation:fadeIn .45s var(--ease)}
+    .tab-content.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    /* HERO */
+  .hero{background:url('./assets/home.png') center right/cover no-repeat;min-height:88vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    /* remove overlay to avoid visible banding */
+    .hero:after{content:none}
+    .hero-content{max-width:1200px;display:grid;grid-template-columns:1fr;gap:2rem;padding:2rem;align-items:center;z-index:1}
+    .hero-text h1{font-size:clamp(2rem,4vw,3rem);color:var(--green-700);margin-bottom:1rem;font-weight:800;line-height:1.15}
+    .hero-text p{font-size:1.15rem;color:#244;opacity:.95;margin-bottom:1.25rem;font-weight:500}
+    .cta-buttons{display:flex;gap:.75rem;flex-wrap:wrap}
+    .btn-primary{background:#fff;color:var(--green);padding:.9rem 1.4rem;border-radius:999px;text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:.5rem;box-shadow:var(--shadow);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+    .btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 26px rgba(0,0,0,.18)}
+    .btn-secondary{background:transparent;color:#fff;border:2px solid #fff;padding:.9rem 1.4rem;border-radius:999px;text-decoration:none;font-weight:800;transition:all .25s var(--ease)}
+    .btn-secondary:hover{background:#fff;color:var(--green)}
+    /* FEATURES HERO */
+    .features-hero{background:linear-gradient(to right,rgba(74,124,89,.92),rgba(45,80,22,.9)),url('assets/plant.webp') center/cover;min-height:58vh;display:flex;align-items:center;justify-content:center;padding:4rem 2rem}
+    .features-hero-content{max-width:800px;text-align:center;color:#fff}
+    .features-hero-content h1{font-size:2.4rem;margin-bottom:1rem}
+    .features-hero-content p{font-size:1.05rem;opacity:.95;margin-bottom:1.5rem}
+    .btn-green{background:var(--green);color:#fff;padding:1rem 2.2rem;border-radius:999px;text-decoration:none;font-weight:800;display:inline-block;transition:all .25s var(--ease);box-shadow:0 6px 18px rgba(76,175,80,.35)}
+    .btn-green:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(76,175,80,.45)}
+    .btn-green.centered{display:block;width:max-content;margin:1.5rem auto 0}
+    /* HOW IT WORKS */
+    .how-it-works{max-width:1000px;margin:3rem auto;padding:2rem}
+    .section-subtitle{font-size:2rem;color:var(--green-700);margin-bottom:1.75rem}
+    .steps-container{background:#fff;border-radius:15px;padding:2rem 1.5rem;box-shadow:var(--shadow)}
+    .process-progress{width:100%;height:6px;background:#e8e8e8;border-radius:999px;margin:0 0 1rem;overflow:hidden}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--green-700));border-radius:999px;width:0%;transition:width .9s var(--ease)}
+    .step-item{display:flex;align-items:center;gap:1.25rem;padding:1.25rem 0;position:relative;opacity:.35;transform:translateX(-18px);transition:all 1s var(--ease)}
+    .step-item.active{opacity:1;transform:translateX(0)}
+    .step-item.completed{opacity:1;transform:translateX(0)}
+    .step-number{width:52px;height:52px;border-radius:50%;background:#e0e0e0;border:3px solid #e0e0e0;display:flex;align-items:center;justify-content:center;font-weight:800;color:#888;flex-shrink:0}
+    .step-item.active .step-number{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 0 18px rgba(76,175,80,.35);animation:pulse-step 2s infinite}
+    .step-item.completed .step-number{background:var(--green-700);border-color:var(--green-700);color:transparent;position:relative}
+    .step-item.completed .step-number:after{content:'✓';position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:1.3rem;animation:pop .6s var(--ease)}
+    @keyframes pulse-step{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+    @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+    .step-item:not(:last-child)::after{content:'';position:absolute;left:26px;top:64px;width:3px;height:50px;background:#e0e0e0}
+    .step-item.completed:not(:last-child)::after{background:linear-gradient(var(--green-700),var(--green))}
+    .step-text h3{color:var(--green-700);margin-bottom:.25rem;font-size:1.15rem}
+    .step-item.active .step-text h3{color:var(--green)}
+    .step-text p{color:var(--muted);line-height:1.6}
+    .description-text{color:var(--muted);text-align:center;max-width:800px;margin:1.25rem auto 0;line-height:1.75}
+    /* SMART CARE */
+    .smart-care-section{background:var(--bg);padding:3rem 2rem}
+    .powered-by{text-align:center;max-width:800px;margin:0 auto 1.6rem}
+    .powered-by h3{font-size:1.85rem;color:var(--green-700);margin-bottom:.4rem}
+    .smart-features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;max-width:1200px;margin:0 auto}
+    .smart-feature{background:#fff;padding:1.5rem;border-radius:15px;text-align:center;box-shadow:var(--shadow)}
+    .smart-icon{font-size:2rem;margin-bottom:.6rem}
+    .smart-feature h4{color:var(--green-700);margin-bottom:.4rem;font-size:1.05rem}
+    .smart-feature p{color:var(--muted);line-height:1.55;font-size:.95rem}
+    /* FUNCIONALIDADES */
+    .funcionalidades-details{max-width:1200px;margin:3rem auto;padding:2rem}
+    .functionality-row{display:grid;grid-template-columns:1fr 1fr;gap:2.2rem;margin-bottom:2.8rem;align-items:center}
+    .functionality-row.reverse{direction:rtl}.functionality-row.reverse>*{direction:ltr}
+    .functionality-text h3{color:var(--green-700);font-size:1.4rem;margin-bottom:.5rem}
+    .functionality-text p{color:var(--muted);line-height:1.75}
+    .functionality-image{background:#e8f5e9;border-radius:var(--radius);padding:2rem;display:flex;align-items:center;justify-content:center;min-height:220px}
+    .functionality-image img{max-width:150px;height:auto}
+    .icon-placeholder{display:flex;align-items:center;justify-content:center}
+    /* MACETY AI (se mantiene tu estética futurista) */
+    .macety-section{background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 25%,#16213e 50%,#0f3460 75%,#1a1a2e 100%);min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4rem 2rem}
+    .macety-section::before{content:'';position:absolute;inset:0;background:
+      radial-gradient(circle at 20% 80%,rgba(76,175,80,.1) 0%,transparent 50%),
+      radial-gradient(circle at 80% 20%,rgba(45,80,22,.1) 0%,transparent 50%),
+      radial-gradient(circle at 40% 40%,rgba(0,200,255,.05) 0%,transparent 50%);
+      animation:float-bg 20s ease-in-out infinite}
+    @keyframes float-bg{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+    .macety-container{max-width:1400px;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:2}
+    .macety-content{color:#fff;padding:1rem}
+    .macety-badge{display:inline-block;background:linear-gradient(135deg,rgba(76,175,80,.22),rgba(45,80,22,.32));border:1px solid rgba(76,175,80,.35);padding:.45rem 1.2rem;border-radius:999px;font-size:.85rem;font-weight:800;margin-bottom:1.25rem;backdrop-filter:blur(10px);animation:glow 3s ease-in-out infinite}
+    @keyframes glow{0%,100%{box-shadow:0 0 16px rgba(76,175,80,.35)}50%{box-shadow:0 0 26px rgba(76,175,80,.6)}}
+    .macety-title{font-size:clamp(2.2rem,5vw,4rem);font-weight:900;background:linear-gradient(135deg,#fff 0%,#4CAF50 50%,#00c8ff 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:1rem;line-height:1.08;animation:text-glow 4s ease-in-out infinite}
+    @keyframes text-glow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.2)}}
+    .macety-subtitle{font-size:1.15rem;color:rgba(255,255,255,.9);margin-bottom:1.25rem;line-height:1.65;font-weight:400}
+    .macety-features{display:flex;flex-direction:column;gap:1rem;margin:1.5rem 0}
+    .macety-feature{display:flex;align-items:center;gap:.9rem;padding:.9rem 1.1rem;background:rgba(255,255,255,.05);border-radius:15px;border:1px solid rgba(76,175,80,.25);backdrop-filter:blur(10px);opacity:0;transform:translateY(18px);animation:fadeUp .8s var(--ease) forwards}
+    .macety-feature:nth-child(1){animation-delay:.15s}.macety-feature:nth-child(2){animation-delay:.3s}.macety-feature:nth-child(3){animation-delay:.45s}.macety-feature:nth-child(4){animation-delay:.6s}
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+    .feature-icon{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--green),#00c8ff);display:grid;place-items:center;color:#fff;font-size:.8rem;font-weight:800}
+    .feature-text{font-size:1rem;color:rgba(255,255,255,.92)}
+    .macety-cta{display:inline-flex;align-items:center;gap:.7rem;background:linear-gradient(135deg,var(--green),#00c8ff);color:#fff;padding:.9rem 1.8rem;border-radius:999px;text-decoration:none;font-weight:900;font-size:1.05rem;transition:all .25s var(--ease);box-shadow:0 12px 28px rgba(76,175,80,.35);position:relative;overflow:hidden}
+    .macety-cta:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(76,175,80,.45)}
+    .macety-visual{display:flex;align-items:center;justify-content:center;padding:1rem}
+    .macety-ai-container{position:relative;width:380px;height:380px;border-radius:50%;background:linear-gradient(135deg,rgba(76,175,80,.1),rgba(0,200,255,.08)),radial-gradient(circle,rgba(76,175,80,.07) 0%,transparent 70%);border:2px solid rgba(76,175,80,.35);display:grid;place-items:center;animation:rotate 30s linear infinite}
+    @keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+    .macety-image{width:280px;height:280px;border-radius:50%;object-fit:cover;box-shadow:0 0 60px rgba(76,175,80,.4),inset 0 0 60px rgba(76,175,80,.12);animation:float 6s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+    /* RESOURCES */
+    .resources-section{background:linear-gradient(135deg,#e8f4fd 0%,#f5f9ff 100%);min-height:100vh;display:flex;align-items:center;padding:4rem 2rem}
+    .resources-container{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .resources-title{font-size:clamp(2rem,4vw,3.2rem);font-weight:900;color:#1a1a1a;line-height:1.2;margin-bottom:1rem}
+    .resources-description{font-size:1.05rem;color:var(--muted);line-height:1.65;margin-bottom:1.5rem;max-width:540px}
+    .download-app-btn{background:var(--green);color:#fff;padding:1rem 2.2rem;border-radius:999px;text-decoration:none;font-weight:900;display:inline-block;transition:all .25s var(--ease);box-shadow:0 10px 24px rgba(76,175,80,.35)}
+    .download-app-btn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(76,175,80,.45)}
+    .macety-img{width:420px;height:420px;object-fit:contain;filter:drop-shadow(0 18px 38px rgba(0,0,0,.12));animation:float 5s ease-in-out infinite}
+    /* COMMUNITY (se mantiene) */
+    .new-community-section{background:#f8f9fa;min-height:100vh;padding:6rem 2rem}
+    .community-container{max-width:1400px;margin:0 auto;text-align:center}
+    .community-main-title{font-size:2.6rem;font-weight:800;color:#333;margin-bottom:2.4rem}
+    .community-showcase{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem;margin:0 auto 2.4rem;max-width:1200px}
+    .showcase-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+    .showcase-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.12)}
+    .showcase-image{height:280px;display:grid;place-items:center;position:relative}
+    .green-bg{background:linear-gradient(135deg,var(--green-700),var(--green-600))}
+    .light-bg{background:linear-gradient(135deg,#f5f5f5,#e8e8e8)}
+    .sage-bg{background:linear-gradient(135deg,#6b8f71,#8fb08c)}
+    .showcase-plant{max-width:180px;object-fit:cover;border-radius:10px;filter:drop-shadow(0 10px 20px rgba(0,0,0,.18))}
+    .showcase-info{padding:1.5rem;text-align:left}
+    .showcase-info h3{font-size:1.15rem;font-weight:800;color:#333;margin-bottom:.35rem}
+    .showcase-info p{color:var(--muted)}
+    /* CONTACT + FOOTER */
+    .contact-section{max-width:840px;margin:3rem auto;padding:2rem;text-align:center}
+    footer{background:var(--green-700);color:#fff;text-align:center;padding:2rem;margin-top:2rem}
+    /* TRANSITION UI removed per request (no visual or DOM) */
+  /* LOADING MINIMAL BAR */
+  .loading-indicator{position:fixed;top:0;left:0;right:0;z-index:9999;opacity:0;visibility:hidden;transition:opacity .15s var(--ease)}
+  .loading-indicator.show{opacity:1;visibility:visible}
+  .loading-bar-bg{width:100%;height:3px;background:transparent}
+  .loading-bar-fill{height:3px;width:0%;background:linear-gradient(90deg,#6bc975,var(--green));box-shadow:0 0 10px rgba(76,175,80,.45);transition:width .18s var(--ease)}
+    /* RESPONSIVE */
+    @media (max-width:900px){
+      .resources-container,.macety-container{grid-template-columns:1fr}
+      .community-showcase{grid-template-columns:1fr}
+      .nav-links{display:none}
+      .hero{background-position:center center;min-height:92vh}
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-content">
-            <div class="logo">Naturafy</div>
-            <ul class="nav-links">
-                <li><a href="#" class="tab-link active" data-tab="hero" data-translate="nav.home">Inicio</a></li>
-                <li><a href="#" class="tab-link" data-tab="funcionalidades" data-translate="nav.features">Funcionalidades</a></li>
-                <li><a href="#" class="tab-link" data-tab="recursos" data-translate="nav.resources">Recursos</a></li>
-                <li><a href="#" class="tab-link" data-tab="comunidad" data-translate="nav.community">Comunidad</a></li>
-                <li><a href="#" class="tab-link" data-tab="contact" data-translate="nav.contact">Contacto</a></li>
-            </ul>
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <div class="language-selector">
-                    <button class="lang-btn active" data-lang="es">ES</button>
-                    <button class="lang-btn" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="zh">中文</button>
-                </div>
-                <a href="#" class="download-btn" data-translate="nav.download">Descargar</a>
-            </div>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-content">
+      <div class="logo">Naturafy</div>
+      <ul class="nav-links">
+        <li><a href="#" class="tab-link active" data-tab="hero" data-translate="nav.home">Inicio</a></li>
+        <li><a href="#" class="tab-link" data-tab="funcionalidades" data-translate="nav.features">Funcionalidades</a></li>
+        <li><a href="#" class="tab-link" data-tab="macety" data-translate="nav.macety">Macety AI</a></li>
+        <li><a href="#" class="tab-link" data-tab="recursos" data-translate="nav.resources">Recursos</a></li>
+        <li><a href="#" class="tab-link" data-tab="comunidad" data-translate="nav.community">Comunidad</a></li>
+        <li><a href="#" class="tab-link" data-tab="contact" data-translate="nav.contact">Contacto</a></li>
+      </ul>
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <div class="language-selector">
+          <button class="lang-btn active" data-lang="es">ES</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="zh">中文</button>
         </div>
-    </nav>
-
-    <!-- Hero Tab -->
-    <div id="hero" class="tab-content active">
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 data-translate="hero.title">Naturafy: technology that connects with nature</h1>
-                    <p data-translate="hero.subtitle">Control your smart pot from the app and join a greener future</p>
-                    <div class="cta-buttons">
-                        <a href="#" class="btn-primary get-it-now" data-translate="hero.btn_primary">Get it now</a>
-                        <a href="#" class="btn-secondary join-family" data-translate="hero.btn_secondary">Join the Naturafy family</a>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <a href="#" class="download-btn" data-translate="nav.download">Descargar</a>
+      </div>
     </div>
+  </nav>
 
-    <!-- Funcionalidades Tab -->
-    <div id="funcionalidades" class="tab-content">
-        <section class="hero" style="min-height: 60vh; background: linear-gradient(135deg, #4a7c59 0%, #2d5016 100%);">
-            <div class="hero-content" style="grid-template-columns: 1fr;">
-                <div class="hero-text" style="text-align: center; color: white;">
-                    <h1 style="color: white;" data-translate="features.title">Naturafy: Cuidado de plantas inteligente</h1>
-                    <p style="color: #e8f5e9;" data-translate="features.subtitle">Monitoreo en tiempo real y cuidado automatizado con tecnología avanzada</p>
-                    <a href="#" class="btn-primary" data-translate="features.learn_more">Conocer más</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="features-section">
-            <h2 class="section-title">Cómo funciona</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🌱</div>
-                    <h3>Sensores Inteligentes</h3>
-                    <p>Nuestros sensores de vanguardia monitorean la humedad del suelo, temperatura y luz en tiempo real.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💧</div>
-                    <h3>Control de riego</h3>
-                    <p>Sistema automatizado de riego que mantiene tus plantas perfectamente hidratadas según sus necesidades.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Historial de condiciones</h3>
-                    <p>Visualiza el historial completo de las condiciones de tus plantas y recibe alertas personalizadas.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">☀️</div>
-                    <h3>Integración con panel solar</h3>
-                    <p>Sistema de energía renovable que funciona de manera autónoma y sostenible.</p>
-                </div>
-            </div>
-
-            <div style="margin-top: 4rem; text-align: center;">
-                <h2 class="section-title">Powered by MaceTy</h2>
-                <p style="color: #666; margin-bottom: 2rem;">Tecnología avanzada para el cuidado de tus plantas</p>
-            </div>
-        </section>
-    </div>
-
-    <!-- Comunidad Tab -->
-    <div id="comunidad" class="tab-content">
-        <section class="community-section">
-            <div class="community-content">
-                <h2 class="section-title" data-translate="community.title">Únete a la Comunidad Naturafy</h2>
-                <p style="font-size: 1.2rem; color: #2d5016; margin-bottom: 2rem;" data-translate="community.subtitle">
-                    Comparte tus experiencias y aprende de otros amantes de las plantas
-                </p>
-
-                <div class="plant-gallery">
-                    <div class="plant-card">
-                        <div style="background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
-                            <span style="font-size: 4rem;">🌵</span>
-                        </div>
-                        <div class="plant-info">
-                            <h3>Plantas Cactus</h3>
-                            <p>Resistentes y de bajo mantenimiento</p>
-                        </div>
-                    </div>
-                    <div class="plant-card">
-                        <div style="background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
-                            <span style="font-size: 4rem;">🌿</span>
-                        </div>
-                        <div class="plant-info">
-                            <h3>Helechos Elegantes</h3>
-                            <p>Perfectos para interiores húmedos</p>
-                        </div>
-                    </div>
-                    <div class="plant-card">
-                        <div style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
-                            <span style="font-size: 4rem;">🪴</span>
-                        </div>
-                        <div class="plant-info">
-                            <h3>Plantas en Maceta</h3>
-                            <p>Ideales para espacios pequeños</p>
-                        </div>
-                    </div>
-                </div>
-
-                <a href="#" class="btn-primary" style="margin-top: 2rem;">Unirse a la comunidad</a>
-            </div>
-        </section>
-    </div>
-
-    <!-- Resources Tab -->
-    <div id="recursos" class="tab-content">
-        <section style="padding: 4rem 2rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); min-height: 80vh;">
-            <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
-                <h2 class="section-title" data-translate="resources.title">Recursos para el Cuidado de Plantas</h2>
-                <p style="font-size: 1.2rem; color: #2d5016; margin-bottom: 3rem;" data-translate="resources.subtitle">
-                    Guías, consejos y herramientas para convertirte en un experto jardinero
-                </p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
-                    <div class="resource-card">
-                        <div style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); padding: 2rem; border-radius: 15px; color: white; margin-bottom: 1rem;">
-                            <span style="font-size: 3rem;">📚</span>
-                            <h3 style="margin: 1rem 0;">Guías de Cuidado</h3>
-                            <p>Aprende sobre riego, luz, fertilización y más para cada tipo de planta</p>
-                        </div>
-                        <a href="#" class="btn-primary">Ver Guías</a>
-                    </div>
-
-                    <div class="resource-card">
-                        <div style="background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%); padding: 2rem; border-radius: 15px; color: white; margin-bottom: 1rem;">
-                            <span style="font-size: 3rem;">🔧</span>
-                            <h3 style="margin: 1rem 0;">Herramientas Útiles</h3>
-                            <p>Calculadoras de riego, recordatorios y planificadores de cuidado</p>
-                        </div>
-                        <a href="#" class="btn-primary">Explorar Herramientas</a>
-                    </div>
-
-                    <div class="resource-card">
-                        <div style="background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%); padding: 2rem; border-radius: 15px; color: white; margin-bottom: 1rem;">
-                            <span style="font-size: 3rem;">🌱</span>
-                            <h3 style="margin: 1rem 0;">Tips de Temporada</h3>
-                            <p>Consejos específicos según la época del año y el clima</p>
-                        </div>
-                        <a href="#" class="btn-primary">Ver Tips</a>
-                    </div>
-
-                    <div class="resource-card">
-                        <div style="background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%); padding: 2rem; border-radius: 15px; color: white; margin-bottom: 1rem;">
-                            <span style="font-size: 3rem;">📱</span>
-                            <h3 style="margin: 1rem 0;">App Móvil</h3>
-                            <p>Descarga nuestra app para llevar todos estos recursos en tu bolsillo</p>
-                        </div>
-                        <a href="#" class="btn-primary">Descargar App</a>
-                    </div>
-                </div>
-
-                <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                    <h3 style="color: #2d5016; margin-bottom: 1rem;">🎯 Recurso Destacado del Mes</h3>
-                    <p style="color: #666; margin-bottom: 1.5rem;">
-                        "Cómo crear un jardín vertical en espacios pequeños" - Una guía completa con video tutorial
-                    </p>
-                    <a href="#" class="btn-primary">Ver Recurso Destacado</a>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Contact Tab -->
-    <div id="contact" class="tab-content">
-        <section class="contact-section">
-            <h2 class="section-title" data-translate="contact.title">Contacta Naturafy</h2>
-            
-            <svg class="contact-character" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="100" cy="100" r="50" fill="#7fda89"/>
-                <circle cx="85" cy="95" r="8" fill="#2d5016"/>
-                <circle cx="115" cy="95" r="8" fill="#2d5016"/>
-                <path d="M85 110 Q100 120 115 110" stroke="#2d5016" stroke-width="3" fill="none"/>
-                <ellipse cx="70" cy="100" rx="10" ry="8" fill="#ff9999" opacity="0.6"/>
-                <ellipse cx="130" cy="100" rx="10" ry="8" fill="#ff9999" opacity="0.6"/>
-            </svg>
-
-            <div class="contact-info">
-                <h3 style="color: #2d5016; margin-bottom: 1rem; font-size: 1.8rem;" data-translate="contact.subtitle">
-                    Disponible en versión móvil y web, siempre acompañada de Macety como tu asistente virtual
-                </h3>
-                <p style="color: #666; font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
-                    Nuestro equipo está listo para ayudarte con cualquier consulta sobre el cuidado de tus plantas y el uso de la plataforma Naturafy.
-                </p>
-                <a href="#" class="btn-primary">Contáctanos</a>
-            </div>
-        </section>
-        
-        <!-- Footer only in contact section -->
-        <footer>
-            <p>&copy; 2025 Naturafy. <span data-translate="footer.rights">Todos los derechos reservados.</span></p>
-            <p style="margin-top: 0.5rem; font-size: 0.9rem;" data-translate="footer.tagline">Tecnología que conecta con la naturaleza 🌱</p>
-        </footer>
-    </div>
-
-    <!-- Transition Indicator -->
-    <div class="transition-indicator" id="transitionIndicator">
-        <div class="transition-circle">
-            <div class="label" data-translate="transition.label">Pasando a</div>
-            <div class="section-name" id="nextSectionName"></div>
+  <!-- HERO -->
+  <div id="hero" class="tab-content active">
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <h1 data-translate="hero.title">Naturafy: tecnología que conecta con la naturaleza</h1>
+          <p data-translate="hero.subtitle">Controla tu maceta inteligente desde la app y únete a un futuro más verde</p>
+          <div class="cta-buttons">
+            <a href="#" class="btn-primary get-it-now" data-translate="hero.btn_primary">Consíguelo ahora</a>
+            <a href="#" class="btn-secondary join-family" data-translate="hero.btn_secondary">Únete a la familia Naturafy</a>
+          </div>
         </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FUNCIONALIDADES -->
+  <div id="funcionalidades" class="tab-content">
+    <section class="features-hero">
+      <div class="features-hero-content">
+        <h1 data-translate="features.title">Naturafy: Cuidado de plantas inteligente</h1>
+        <p data-translate="features.subtitle">Monitoreo en tiempo real y cuidado automatizado con tecnología avanzada</p>
+        <a href="#" class="btn-green" data-translate="features.learn_more">Conocer más</a>
+      </div>
+    </section>
+
+    <section class="how-it-works">
+      <h2 class="section-subtitle" data-translate="how.title">Cómo funciona</h2>
+      <div class="steps-container">
+        <div class="process-progress"><div class="progress-fill" id="progressFill"></div></div>
+
+        <div class="step-item" data-step="1">
+          <div class="step-number">1</div>
+          <div class="step-text">
+            <h3 data-translate="how.s1.title">Conecta tu maceta</h3>
+            <p data-translate="how.s1.text">Conecta tu maceta inteligente Naturafy a tu red Wi-Fi para comenzar el monitoreo.</p>
+          </div>
+        </div>
+        <div class="step-item" data-step="2">
+          <div class="step-number">2</div>
+          <div class="step-text">
+            <h3 data-translate="how.s2.title">Sincroniza con la app</h3>
+            <p data-translate="how.s2.text">Descarga y sincroniza tu maceta con la aplicación móvil o web de Naturafy.</p>
+          </div>
+        </div>
+        <div class="step-item" data-step="3">
+          <div class="step-number">3</div>
+          <div class="step-text">
+            <h3 data-translate="how.s3.title">Deja que Naturafy cuide</h3>
+            <p data-translate="how.s3.text">Recibe alertas inteligentes y deja que Naturafy cuide automáticamente de tus plantas.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="description-text" data-translate="how.desc">
+        Naturafy te permite organizar las plantas de tu hogar u oficina para mantenerlas siempre saludables.
+      </p>
+      <a href="#" class="btn-green centered" data-translate="how.cta">Comenzar ahora</a>
+    </section>
+
+    <section class="smart-care-section">
+      <h2 class="section-subtitle" data-translate="smart.title">Naturafy: Smart Plant Care</h2>
+      <div class="powered-by">
+        <h3 data-translate="smart.powered">Impulsado por MaceTy</h3>
+        <p data-translate="smart.text">MaceTy combina IoT y sostenibilidad para el cuidado de plantas.</p>
+      </div>
+
+      <div class="smart-features-grid">
+        <div class="smart-feature">
+          <div class="smart-icon">🌡️</div>
+          <h4 data-translate="smart.f1.title">Monitoreo de humedad, luz y temperatura</h4>
+          <p data-translate="smart.f1.text">Datos en tiempo real para entender la salud de tus plantas.</p>
+        </div>
+        <div class="smart-feature">
+          <div class="smart-icon">💧</div>
+          <h4 data-translate="smart.f2.title">Riego automático según necesidad real</h4>
+          <p data-translate="smart.f2.text">Asegura la cantidad de agua precisa en el momento correcto.</p>
+        </div>
+        <div class="smart-feature">
+          <div class="smart-icon">☀️</div>
+          <h4 data-translate="smart.f3.title">Energía solar para mayor autonomía</h4>
+          <p data-translate="smart.f3.text">Operación eco-friendly con menor dependencia eléctrica.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="funcionalidades-details">
+      <h2 class="section-subtitle" data-translate="feat.title">Funcionalidades</h2>
+
+      <div class="functionality-row">
+        <div class="functionality-text">
+          <h3 data-translate="feat.a1.title">Alertas de humedad</h3>
+          <p data-translate="feat.a1.text">Recibe notificaciones cuando tus plantas necesiten agua.</p>
+        </div>
+        <div class="functionality-image">
+          <img src="assets/leaf-icon.png" alt="Leaf Icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="icon-placeholder">
+            <svg width="120" height="120" viewBox="0 0 120 120"><path d="M60 10 Q100 40 100 80 Q100 100 80 110 Q60 120 40 110 Q20 100 20 80 Q20 40 60 10" fill="#c8e6c9" stroke="#4CAF50" stroke-width="2"/><path d="M60 10 Q60 40 60 100" stroke="#4CAF50" stroke-width="2" fill="none"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="functionality-row reverse">
+        <div class="functionality-image">
+          <img src="assets/calendar-icon.png" alt="Calendar Icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="icon-placeholder">
+            <svg width="120" height="120" viewBox="0 0 120 120"><rect x="20" y="30" width="80" height="70" rx="5" fill="#e3f2fd" stroke="#2196F3" stroke-width="2"/><rect x="20" y="30" width="80" height="20" fill="#2196F3"/><path d="M50 50 L50 80 M70 65 L70 80" stroke="#2196F3" stroke-width="3" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="functionality-text">
+          <h3 data-translate="feat.a2.title">Historial de riego</h3>
+          <p data-translate="feat.a2.text">Consulta fechas y cantidades para un seguimiento preciso.</p>
+        </div>
+      </div>
+
+      <div class="functionality-row">
+        <div class="functionality-text">
+          <h3 data-translate="feat.a3.title">Control remoto de bomba</h3>
+          <p data-translate="feat.a3.text">Activa o desactiva la bomba desde cualquier lugar.</p>
+        </div>
+        <div class="functionality-image">
+          <img src="assets/pump-icon.png" alt="Pump Icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="icon-placeholder">
+            <svg width="120" height="120" viewBox="0 0 120 120"><rect x="30" y="40" width="60" height="50" rx="5" fill="#b2dfdb" stroke="#009688" stroke-width="2"/><circle cx="60" cy="65" r="15" fill="#009688"/><path d="M60 50 L60 35 M45 65 L30 65 M75 65 L90 65" stroke="#009688" stroke-width="3" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="functionality-row reverse">
+        <div class="functionality-image">
+          <img src="assets/solar-icon.png" alt="Solar Panel Icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="icon-placeholder">
+            <svg width="120" height="120" viewBox="0 0 120 120"><rect x="25" y="40" width="70" height="45" rx="3" fill="#4a7c59" stroke="#2d5016" stroke-width="2"/><path d="M25 55 L95 55 M25 70 L95 70" stroke="#2d5016" stroke-width="1"/><path d="M40 40 L40 85 M55 40 L55 85 M70 40 L70 85 M85 40 L85 85" stroke="#2d5016" stroke-width="1"/><path d="M60 20 L60 35 M40 30 L50 40 M80 30 L70 40" stroke="#FFC107" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+        </div>
+        <div class="functionality-text">
+          <h3 data-translate="feat.a4.title">Energía solar integrada</h3>
+          <p data-translate="feat.a4.text">Autonomía ecológica con panel y batería recargable.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- MACETY AI -->
+  <div id="macety" class="tab-content">
+    <section class="macety-section">
+      <div class="macety-container">
+        <div class="macety-content">
+          <div class="macety-badge" data-translate="ai.badge">🤖 Inteligencia Artificial</div>
+          <h1 class="macety-title" data-translate="ai.title">Conoce a Macety AI</h1>
+          <p class="macety-subtitle" data-translate="ai.subtitle">Tu asistente virtual inteligente para el cuidado de plantas.</p>
+          <div class="macety-features">
+            <div class="macety-feature"><div class="feature-icon">🧠</div><div class="feature-text" data-translate="ai.f1">Análisis predictivo del estado de tus plantas</div></div>
+            <div class="macety-feature"><div class="feature-icon">💬</div><div class="feature-text" data-translate="ai.f2">Conversación natural e interactiva</div></div>
+            <div class="macety-feature"><div class="feature-icon">📊</div><div class="feature-text" data-translate="ai.f3">Recomendaciones personalizadas en tiempo real</div></div>
+            <div class="macety-feature"><div class="feature-icon">🌱</div><div class="feature-text" data-translate="ai.f4">Optimización automática del cuidado</div></div>
+          </div>
+          <a href="#" class="macety-cta" data-translate="ai.cta">Hablar con Macety →</a>
+        </div>
+        <div class="macety-visual">
+          <div class="macety-ai-container">
+            <img src="./assets/MaceTy.png" alt="Macety AI Assistant" class="macety-image">
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- COMUNIDAD -->
+  <div id="comunidad" class="tab-content">
+    <section class="new-community-section">
+      <div class="community-container">
+        <h1 class="community-main-title" data-translate="community.title">Únete a la Comunidad Naturafy</h1>
+        <div class="community-showcase">
+          <div class="showcase-card">
+            <div class="showcase-image green-bg"><img src="./assets/plant.webp" class="showcase-plant" alt=""><div class="plant-brand">NATURAFY</div></div>
+            <div class="showcase-info"><h3>Elena's Urban Oasis</h3><p>Elena transformó su apartamento con Naturafy.</p></div>
+          </div>
+          <div class="showcase-card">
+            <div class="showcase-image light-bg"><img src="./assets/plant.webp" class="showcase-plant center" alt=""></div>
+            <div class="showcase-info"><h3>Carlos's Balcony Garden</h3><p>Carlos creó un oasis verde en su balcón.</p></div>
+          </div>
+          <div class="showcase-card">
+            <div class="showcase-image sage-bg"><img src="./assets/plant.webp" class="showcase-plant tall" alt=""></div>
+            <div class="showcase-info"><h3>Sofia's Indoor Jungle</h3><p>Sofía llevó la naturaleza al interior con su maceta inteligente.</p></div>
+          </div>
+        </div>
+        <div class="community-actions">
+          <a href="#" class="btn-green" data-translate="community.explore">Explorar foros</a>
+          <a href="#" class="download-btn" style="background:#fff;color:var(--green);border:2px solid #ddd" data-translate="community.joinfb">Unirse al grupo de Facebook</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- RECURSOS -->
+  <div id="recursos" class="tab-content">
+    <section class="resources-section">
+      <div class="resources-container">
+        <div class="resources-content">
+          <h1 class="resources-title" data-translate="resources.title">Disponible en versión móvil y web, siempre acompañada de Macety como tu asistente virtual.</h1>
+          <p class="resources-description" data-translate="resources.subtitle">Accede a Naturafy desde cualquier dispositivo. Notificaciones, historial y alertas en tiempo real.</p>
+          <a href="#" class="download-app-btn" data-translate="resources.download">Descargar la app</a>
+        </div>
+        <div class="resources-visual">
+          <img src="./assets/Macety-movil.png" alt="Macety Assistant" class="macety-img">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CONTACTO -->
+  <div id="contact" class="tab-content">
+    <section class="contact-section">
+      <h2 class="section-title" data-translate="contact.title">Contacta Naturafy</h2>
+      <div class="contact-info" style="background:#fff;padding:2rem;border-radius:var(--radius);box-shadow:var(--shadow);margin-top:1rem">
+        <h3 style="color:var(--green-700);margin-bottom:.6rem;font-size:1.6rem" data-translate="contact.subtitle">
+          Disponible en móvil y web, siempre con Macety como asistente virtual
+        </h3>
+        <p style="color:var(--muted);font-size:1.05rem;line-height:1.75;margin-bottom:1.25rem" data-translate="contact.text">
+          Estamos listos para ayudarte con cualquier consulta sobre Naturafy y el cuidado de tus plantas.
+        </p>
+        <a href="#" class="btn-primary" data-translate="contact.cta">Contáctanos</a>
+      </div>
+    </section>
+    <footer>
+      <p>© 2025 Naturafy. <span data-translate="footer.rights">Todos los derechos reservados.</span></p>
+      <p style="margin-top:.5rem;font-size:.9rem" data-translate="footer.tagline">Tecnología que conecta con la naturaleza 🌱</p>
+    </footer>
+  </div>
+
+  
+
+  <!-- LOADING -->
+  <div class="loading-indicator" id="loadingIndicator">
+    <div class="loading-bar-bg">
+      <div class="loading-bar-fill" id="loadingBar"></div>
     </div>
+  </div>
 
-    <script>
-        // Internationalization System
-        const translations = {
-            en: {
-                'nav.home': 'Home',
-                'nav.features': 'Features',
-                'nav.resources': 'Resources',
-                'nav.community': 'Community',
-                'nav.contact': 'Contact',
-                'nav.download': 'Download',
-                'transition.label': 'Moving to',
-                'section.hero': 'Home',
-                'section.funcionalidades': 'Features',
-                'section.recursos': 'Resources',
-                'section.comunidad': 'Community',
-                'section.contact': 'Contact',
-                'hero.title': 'Naturafy: technology that connects with nature',
-                'hero.subtitle': 'Control your smart pot from the app and join a greener future',
-                'hero.btn_primary': 'Get it now',
-                'hero.btn_secondary': 'Join the Naturafy family',
-                'features.title': 'Naturafy: Smart Plant Care',
-                'features.subtitle': 'Real-time monitoring and automated care with advanced technology',
-                'features.learn_more': 'Learn more',
-                'resources.title': 'Plant Care Resources',
-                'resources.subtitle': 'Guides, tips and tools to become an expert gardener',
-                'community.title': 'Join the Naturafy Community',
-                'community.subtitle': 'Share your experiences and learn from other plant lovers',
-                'contact.title': 'Contact Naturafy',
-                'contact.subtitle': 'Available in mobile and web version, always accompanied by Macety as your virtual assistant',
-                'footer.rights': 'All rights reserved.',
-                'footer.tagline': 'Technology that connects with nature 🌱'
-            },
-            es: {
-                'nav.home': 'Inicio',
-                'nav.features': 'Funcionalidades',
-                'nav.resources': 'Recursos',
-                'nav.community': 'Comunidad',
-                'nav.contact': 'Contacto',
-                'nav.download': 'Descargar',
-                'transition.label': 'Pasando a',
-                'section.hero': 'Inicio',
-                'section.funcionalidades': 'Funcionalidades',
-                'section.recursos': 'Recursos',
-                'section.comunidad': 'Comunidad',
-                'section.contact': 'Contacto',
-                'hero.title': 'Naturafy: tecnología que conecta con la naturaleza',
-                'hero.subtitle': 'Controla tu maceta inteligente desde la app y únete a un futuro más verde',
-                'hero.btn_primary': 'Consíguelo ahora',
-                'hero.btn_secondary': 'Únete a la familia Naturafy',
-                'features.title': 'Naturafy: Cuidado de plantas inteligente',
-                'features.subtitle': 'Monitoreo en tiempo real y cuidado automatizado con tecnología avanzada',
-                'features.learn_more': 'Conocer más',
-                'resources.title': 'Recursos para el Cuidado de Plantas',
-                'resources.subtitle': 'Guías, consejos y herramientas para convertirte en un experto jardinero',
-                'community.title': 'Únete a la Comunidad Naturafy',
-                'community.subtitle': 'Comparte tus experiencias y aprende de otros amantes de las plantas',
-                'contact.title': 'Contacta Naturafy',
-                'contact.subtitle': 'Disponible en versión móvil y web, siempre acompañada de Macety como tu asistente virtual',
-                'footer.rights': 'Todos los derechos reservados.',
-                'footer.tagline': 'Tecnología que conecta con la naturaleza 🌱'
-            },
-            zh: {
-                'nav.home': '首页',
-                'nav.features': '功能',
-                'nav.resources': '资源',
-                'nav.community': '社区',
-                'nav.contact': '联系',
-                'nav.download': '下载',
-                'transition.label': '转到',
-                'section.hero': '首页',
-                'section.funcionalidades': '功能',
-                'section.recursos': '资源',
-                'section.comunidad': '社区',
-                'section.contact': '联系',
-                'nav.community': '社区',
-                'nav.contact': '联系',
-                'nav.download': '下载',
-                'hero.title': 'Naturafy：连接自然的技术',
-                'hero.subtitle': '通过应用程序控制您的智能花盆，加入更绿色的未来',
-                'hero.btn_primary': '立即获取',
-                'hero.btn_secondary': '加入Naturafy家族',
-                'features.title': 'Naturafy：智能植物护理',
-                'features.subtitle': '采用先进技术进行实时监控和自动护理',
-                'features.learn_more': '了解更多',
-                'resources.title': '植物护理资源',
-                'resources.subtitle': '指南、技巧和工具，助您成为园艺专家',
-                'community.title': '加入Naturafy社区',
-                'community.subtitle': '分享您的经验，向其他植物爱好者学习',
-                'contact.title': '联系Naturafy',
-                'contact.subtitle': '提供移动和网页版本，始终有Macety作为您的虚拟助手陪伴',
-                'footer.rights': '版权所有。',
-                'footer.tagline': '连接自然的技术 🌱'
-            }
-        };
+  <script>
+    /* =================== I18N =================== */
+    const translations = {
+      es: {
+        "meta.title":"Naturafy - Cuidado inteligente de plantas",
+        "meta.description":"Tecnología que conecta con la naturaleza. Controla tu maceta inteligente desde la app y únete a un futuro más verde.",
+        "nav.home":"Inicio","nav.features":"Funcionalidades","nav.macety":"Macety AI","nav.resources":"Recursos","nav.community":"Comunidad","nav.contact":"Contacto","nav.download":"Descargar",
+        "transition.label":"Pasando a","loading.text":"Continúa",
+        "section.hero":"Inicio","section.funcionalidades":"Funcionalidades","section.recursos":"Recursos","section.comunidad":"Comunidad","section.contact":"Contacto","section.macety":"Macety AI",
+        "hero.title":"Naturafy: tecnología que conecta con la naturaleza",
+        "hero.subtitle":"Controla tu maceta inteligente desde la app y únete a un futuro más verde",
+        "hero.btn_primary":"Consíguelo ahora","hero.btn_secondary":"Únete a la familia Naturafy",
+        "features.title":"Naturafy: Cuidado de plantas inteligente","features.subtitle":"Monitoreo en tiempo real y cuidado automatizado con tecnología avanzada","features.learn_more":"Conocer más",
+        "how.title":"Cómo funciona","how.s1.title":"Conecta tu maceta","how.s1.text":"Conecta tu maceta inteligente Naturafy a tu red Wi-Fi para comenzar el monitoreo.",
+        "how.s2.title":"Sincroniza con la app","how.s2.text":"Descarga y sincroniza tu maceta con la aplicación móvil o web de Naturafy.",
+        "how.s3.title":"Deja que Naturafy cuide","how.s3.text":"Recibe alertas inteligentes y deja que Naturafy cuide automáticamente de tus plantas.",
+        "how.desc":"Naturafy te permite organizar las plantas de tu hogar u oficina para mantenerlas siempre saludables.","how.cta":"Comenzar ahora",
+        "smart.title":"Naturafy: Smart Plant Care","smart.powered":"Impulsado por MaceTy","smart.text":"MaceTy combina IoT y sostenibilidad para el cuidado de plantas.",
+        "smart.f1.title":"Monitoreo de humedad, luz y temperatura","smart.f1.text":"Datos en tiempo real para entender la salud de tus plantas.",
+        "smart.f2.title":"Riego automático según necesidad real","smart.f2.text":"Asegura la cantidad de agua precisa en el momento correcto.",
+        "smart.f3.title":"Energía solar para mayor autonomía","smart.f3.text":"Operación eco-friendly con menor dependencia eléctrica.",
+        "feat.title":"Funcionalidades","feat.a1.title":"Alertas de humedad","feat.a1.text":"Recibe notificaciones cuando tus plantas necesiten agua.",
+        "feat.a2.title":"Historial de riego","feat.a2.text":"Consulta fechas y cantidades para un seguimiento preciso.",
+        "feat.a3.title":"Control remoto de bomba","feat.a3.text":"Activa o desactiva la bomba desde cualquier lugar.",
+        "feat.a4.title":"Energía solar integrada","feat.a4.text":"Autonomía ecológica con panel y batería recargable.",
+  "ai.badge":"🤖 Inteligencia Artificial","ai.title":"Conoce a Macety AI","ai.subtitle":"Tu asistente virtual inteligente para el cuidado de plantas.","ai.f1":"Análisis predictivo del estado de tus plantas","ai.f2":"Conversación natural e interactiva","ai.f3":"Recomendaciones personalizadas en tiempo real","ai.f4":"Optimización automática del cuidado","ai.cta":"Hablar con Macety →",
+        "community.title":"Únete a la Comunidad Naturafy","community.explore":"Explorar foros","community.joinfb":"Unirse al grupo de Facebook",
+        "resources.title":"Disponible en versión móvil y web, siempre acompañada de Macety como tu asistente virtual.","resources.subtitle":"Accede a Naturafy desde cualquier dispositivo. Notificaciones, historial y alertas en tiempo real.","resources.download":"Descargar la app",
+        "contact.title":"Contacta Naturafy","contact.subtitle":"Disponible en móvil y web, siempre con Macety como asistente virtual","contact.text":"Estamos listos para ayudarte con cualquier consulta sobre Naturafy y el cuidado de tus plantas.","contact.cta":"Contáctanos",
+        "footer.rights":"Todos los derechos reservados.","footer.tagline":"Tecnología que conecta con la naturaleza 🌱"
+      },
+      en: {
+        "meta.title":"Naturafy - Smart Plant Care",
+        "meta.description":"Technology that connects with nature. Control your smart pot from the app and join a greener future.",
+        "nav.home":"Home","nav.features":"Features","nav.macety":"Macety AI","nav.resources":"Resources","nav.community":"Community","nav.contact":"Contact","nav.download":"Download",
+        "transition.label":"Moving to","loading.text":"Continue",
+        "section.hero":"Home","section.funcionalidades":"Features","section.recursos":"Resources","section.comunidad":"Community","section.contact":"Contact","section.macety":"Macety AI",
+        "hero.title":"Naturafy: technology that connects with nature",
+        "hero.subtitle":"Control your smart pot from the app and join a greener future",
+        "hero.btn_primary":"Get it now","hero.btn_secondary":"Join the Naturafy family",
+        "features.title":"Naturafy: Smart Plant Care","features.subtitle":"Real-time monitoring and automated care with advanced technology","features.learn_more":"Learn more",
+        "how.title":"How it works","how.s1.title":"Connect your planter","how.s1.text":"Connect your Naturafy smart pot to your Wi-Fi network to start monitoring.",
+        "how.s2.title":"Sync with the app","how.s2.text":"Download and sync your pot with the Naturafy mobile or web app.",
+        "how.s3.title":"Let Naturafy care","how.s3.text":"Get smart alerts and let Naturafy care for your plants automatically.",
+        "how.desc":"Organize plants at home or office and keep them healthy with Naturafy.","how.cta":"Start now",
+        "smart.title":"Naturafy: Smart Plant Care","smart.powered":"Powered by MaceTy","smart.text":"MaceTy blends IoT and sustainability for plant care.",
+        "smart.f1.title":"Moisture, light, and temperature monitoring","smart.f1.text":"Real-time insights to understand plant health.",
+        "smart.f2.title":"Automatic watering by real need","smart.f2.text":"Ensure the right amount of water at the right time.",
+        "smart.f3.title":"Solar energy for autonomy","smart.f3.text":"Eco-friendly operation with less grid dependence.",
+        "feat.title":"Features","feat.a1.title":"Moisture alerts","feat.a1.text":"Get notified when your plants need water.",
+        "feat.a2.title":"Watering history","feat.a2.text":"See dates and amounts for precise tracking.",
+        "feat.a3.title":"Remote pump control","feat.a3.text":"Turn the pump on/off from anywhere.",
+        "feat.a4.title":"Integrated solar power","feat.a4.text":"Eco autonomy with panel and rechargeable battery.",
+  "ai.badge":"🤖 Artificial Intelligence","ai.title":"Meet Macety AI","ai.subtitle":"Your intelligent virtual assistant for plant care.","ai.f1":"Predictive analysis of plant status","ai.f2":"Natural, interactive conversation","ai.f3":"Real-time personalized recommendations","ai.f4":"Automatic care optimization","ai.cta":"Chat with Macety →",
+        "community.title":"Join the Naturafy Community","community.explore":"Explore forums","community.joinfb":"Join Facebook group",
+        "resources.title":"Available on mobile and web, always with Macety as your virtual assistant.","resources.subtitle":"Access Naturafy on any device. Real-time notifications, history and alerts.","resources.download":"Download the app",
+        "contact.title":"Contact Naturafy","contact.subtitle":"Available in mobile and web versions, always with Macety as your virtual assistant","contact.text":"We’re ready to help with any questions about Naturafy and plant care.","contact.cta":"Contact us",
+        "footer.rights":"All rights reserved.","footer.tagline":"Technology that connects with nature 🌱"
+      },
+      /* Chino simplificado (zh) */
+      zh: {
+        "meta.title":"Naturafy - 智能植物护理",
+        "meta.description":"连接自然的技术。通过应用控制你的智能花盆，共同迈向更绿色的未来。",
+        "nav.home":"首页","nav.features":"功能","nav.macety":"Macety AI","nav.resources":"资源","nav.community":"社区","nav.contact":"联系","nav.download":"下载",
+        "transition.label":"切换到","loading.text":"继续",
+        "section.hero":"首页","section.funcionalidades":"功能","section.recursos":"资源","section.comunidad":"社区","section.contact":"联系","section.macety":"Macety AI",
+        "hero.title":"Naturafy：连接自然的技术",
+        "hero.subtitle":"通过应用控制智能花盆，加入更绿色的未来",
+        "hero.btn_primary":"立即获取","hero.btn_secondary":"加入 Naturafy 家庭",
+        "features.title":"Naturafy：智能植物护理","features.subtitle":"实时监测与自动化护理","features.learn_more":"了解更多",
+        "how.title":"如何运作","how.s1.title":"连接花盆","how.s1.text":"将 Naturafy 智能花盆连接到 Wi‑Fi 开始监测。",
+        "how.s2.title":"同步应用","how.s2.text":"下载并与手机或网页版应用同步。",
+        "how.s3.title":"交给 Naturafy","how.s3.text":"接收智能提醒，让 Naturafy 自动照料植物。",
+        "how.desc":"在家或办公室有序管理植物，让它们始终健康。","how.cta":"立即开始",
+        "smart.title":"Naturafy：智能植物护理","smart.powered":"由 MaceTy 驱动","smart.text":"MaceTy 融合物联网与可持续理念，助力植物护理。",
+        "smart.f1.title":"土壤湿度/光照/温度监测","smart.f1.text":"实时数据助你了解植物健康。",
+        "smart.f2.title":"按需自动浇水","smart.f2.text":"在正确时间提供精准水量。",
+        "smart.f3.title":"太阳能供电","smart.f3.text":"更环保，对电网依赖更少。",
+        "feat.title":"功能","feat.a1.title":"湿度提醒","feat.a1.text":"需要浇水时及时提醒。",
+        "feat.a2.title":"浇水记录","feat.a2.text":"查看日期和水量，便于精确管理。",
+        "feat.a3.title":"远程泵控","feat.a3.text":"在任何地方开启/关闭。",
+        "feat.a4.title":"内置太阳能","feat.a4.text":"配备电池，持续运行。",
+        "ai.badge":"🤖 人工智能","ai.title":"认识 Macety AI","ai.subtitle":"你的智能植物助手。","ai.f1":"预测性分析","ai.f2":"自然对话","ai.f3":"实时个性化建议","ai.f4":"自动优化护理","ai.cta":"与 Macety 对话 →",
+        "community.title":"加入 Naturafy 社区","community.explore":"探索论坛","community.joinfb":"加入 Facebook 小组",
+        "resources.title":"移动端与网页版均可使用，Macety 始终相伴。",
+        "resources.subtitle":"在任何设备上获取通知、历史与警报。",
+        "resources.download":"下载应用",
+        "contact.title":"联系 Naturafy","contact.subtitle":"移动与网页版可用，Macety 相伴","contact.text":"我们随时解答你关于 Naturafy 与植物护理的问题。","contact.cta":"联系我们",
+        "footer.rights":"版权所有。","footer.tagline":"连接自然的技术 🌱"
+      }
+    };
 
-        let currentLanguage = 'es'; // Default language
+    const sections = ['hero','funcionalidades','macety','recursos','comunidad','contact'];
+    let currentSectionIndex = 0;
+  let currentLanguage = localStorage.getItem('naturafy-language') || 'es';
+  if(currentLanguage === 'zh_py') currentLanguage = 'zh';
 
-        function changeLanguage(lang) {
-            currentLanguage = lang;
-            localStorage.setItem('naturafy-language', lang);
-            updateLanguageDisplay();
+    function applyLangAttrs(){
+  document.documentElement.lang = currentLanguage === 'zh' ? 'zh' : currentLanguage;
+      document.documentElement.dir = 'ltr';
+      document.querySelector('title').textContent = t('meta.title');
+      document.querySelector('meta[name="description"]').setAttribute('content', t('meta.description'));
+    }
+
+    function t(key){ return (translations[currentLanguage] && translations[currentLanguage][key]) || translations['es'][key] || key; }
+
+    function updateLanguageDisplay(){
+      document.querySelectorAll('[data-translate]').forEach(el=>{
+        const key = el.getAttribute('data-translate');
+        if(t(key)) el.textContent = t(key);
+      });
+      document.querySelectorAll('.lang-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.lang===currentLanguage));
+      applyLangAttrs();
+    }
+
+    function changeLanguage(lang){
+      currentLanguage = lang;
+      localStorage.setItem('naturafy-language',lang);
+      updateLanguageDisplay();
+  // no transition UI to update
+    }
+
+    // init language
+    updateLanguageDisplay();
+
+    // handlers de idioma
+    document.querySelectorAll('.lang-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>changeLanguage(btn.dataset.lang));
+    });
+
+    /* =================== Navegación entre secciones =================== */
+    const tabLinks = document.querySelectorAll('.tab-link');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    // transition indicator removed (no-op)
+
+    function changeSection(index, fromDirection='top'){
+      tabLinks.forEach(l=>l.classList.remove('active'));
+      tabContents.forEach(c=>c.classList.remove('active'));
+      const id = sections[index];
+      document.querySelector(`[data-tab="${id}"]`)?.classList.add('active');
+      document.getElementById(id)?.classList.add('active');
+      currentSectionIndex = index;
+      window.scrollTo({top: fromDirection==='bottom' ? document.body.scrollHeight : 0, behavior:'smooth'});
+      // reiniciar animación de pasos si entramos a funcionalidades
+      if(id==='funcionalidades') startStepsAnimation(true);
+    }
+
+    function showSection(index, withTransition=false, direction='top'){
+      // direct change; no transition overlay
+      changeSection(index, direction);
+    }
+
+    tabLinks.forEach((link)=>{
+      link.addEventListener('click',(e)=>{
+        e.preventDefault();
+        const tabId = link.getAttribute('data-tab');
+        const idx = sections.indexOf(tabId);
+        if(idx!==-1) showSection(idx,false);
+      });
+    });
+
+    /* =================== Loading circular mejorado =================== */
+  const loadingIndicator = document.getElementById('loadingIndicator');
+  const loadingBar = document.getElementById('loadingBar');
+
+    let scrollProgress = 0;
+    let isLoadingNext = false;
+    const scrollThreshold = 100; // “resistencia” para cambiar
+
+    function setLoading(pct){
+      const clamped = Math.min(100, Math.max(0, pct));
+      loadingIndicator.classList.toggle('show', clamped>0);
+      if(loadingBar) loadingBar.style.width = clamped + '%';
+    }
+
+    function isAtBottom(){ return window.innerHeight + window.scrollY >= document.body.offsetHeight - 10; }
+    function isAtTop(){ return window.scrollY <= 10; }
+
+    window.addEventListener('wheel',(e)=>{
+      if(e.deltaY>0){
+        if(isAtBottom() && currentSectionIndex < sections.length-1){
+          e.preventDefault();
+          isLoadingNext ||= true; scrollProgress += Math.abs(e.deltaY)*0.5;
+          const pct = Math.min(100, (scrollProgress/scrollThreshold)*100); setLoading(pct);
+          if(pct>=100){ setLoading(0); isLoadingNext=false; scrollProgress=0; showSection(currentSectionIndex+1,true,'top'); }
+        } else if(isLoadingNext){ setLoading(0); isLoadingNext=false; scrollProgress=0; }
+      } else {
+        if(isAtTop() && currentSectionIndex>0){
+          e.preventDefault();
+          isLoadingNext ||= true; scrollProgress += Math.abs(e.deltaY)*0.5;
+          const pct = Math.min(100, (scrollProgress/scrollThreshold)*100); setLoading(pct);
+          if(pct>=100){ setLoading(0); isLoadingNext=false; scrollProgress=0; showSection(currentSectionIndex-1,true,'bottom'); }
+        } else if(isLoadingNext){ setLoading(0); isLoadingNext=false; scrollProgress=0; }
+      }
+    });
+
+    document.addEventListener('keydown',(e)=>{
+      if(['ArrowDown','PageDown'].includes(e.key) && currentSectionIndex<sections.length-1){ e.preventDefault(); showSection(currentSectionIndex+1,true,'top'); }
+      if(['ArrowUp','PageUp'].includes(e.key) && currentSectionIndex>0){ e.preventDefault(); showSection(currentSectionIndex-1,true,'bottom'); }
+    });
+
+    /* =================== Animación “Cómo funciona” =================== */
+    function startStepsAnimation(force=false){
+      const container = document.querySelector('.how-it-works');
+      const steps = document.querySelectorAll('.step-item');
+      const progressFill = document.getElementById('progressFill');
+      if(!container || steps.length===0) return;
+
+      let currentStep = 0;
+      function animate(){
+        steps.forEach(s=>s.classList.remove('active','completed'));
+        for(let i=0;i<currentStep;i++){
+          setTimeout(()=>{ steps[i].classList.add('completed'); progressFill.style.width = ((i+1)/steps.length*100)+'%'; }, i*150);
         }
-
-        function updateLanguageDisplay() {
-            const elements = document.querySelectorAll('[data-translate]');
-            elements.forEach(element => {
-                const key = element.getAttribute('data-translate');
-                if (translations[currentLanguage] && translations[currentLanguage][key]) {
-                    element.textContent = translations[currentLanguage][key];
-                }
-            });
-
-            // Update language selector active state
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`.lang-btn[data-lang="${currentLanguage}"]`)?.classList.add('active');
+        if(currentStep<steps.length){
+          setTimeout(()=>{
+            steps[currentStep].classList.add('active');
+            progressFill.style.width = ((currentStep+1)/steps.length*100)+'%';
+          }, currentStep*150+200);
         }
+        setTimeout(()=>{
+          currentStep++;
+          if(currentStep>steps.length){
+            progressFill.style.width='100%';
+            setTimeout(()=>{ currentStep=0; progressFill.style.width='0%'; }, 1600);
+          } else { /* loop continúa */ }
+        }, 1200);
+      }
 
-        // Tab navigation
-        const tabLinks = document.querySelectorAll('.tab-link');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const sections = ['hero', 'funcionalidades', 'recursos', 'comunidad', 'contact'];
-        let currentSectionIndex = 0;
+      const rect = container.getBoundingClientRect();
+      const visible = rect.top < window.innerHeight && rect.bottom > 0;
+      if(force || visible) { animate(); clearInterval(window.__stepsTimer); window.__stepsTimer=setInterval(animate, 4200); }
+    }
 
-        function showTransitionIndicator(targetIndex) {
-            const indicator = document.getElementById('transitionIndicator');
-            const sectionNameEl = document.getElementById('nextSectionName');
-            const sectionKey = `section.${sections[targetIndex]}`;
-            
-            // Set section name
-            if (translations[currentLanguage] && translations[currentLanguage][sectionKey]) {
-                sectionNameEl.textContent = translations[currentLanguage][sectionKey];
-            }
-            
-            // Show indicator
-            indicator.classList.add('show');
-            
-            // Hide after delay
-            setTimeout(() => {
-                indicator.classList.remove('show');
-            }, 1500);
-        }
+    window.addEventListener('scroll',()=>{ if(currentSectionIndex===1) startStepsAnimation(); });
 
-        function showSection(index, withTransition = false) {
-            if (withTransition) {
-                showTransitionIndicator(index);
-                
-                // Delay the actual section change
-                setTimeout(() => {
-                    changeSection(index);
-                }, 500);
-            } else {
-                changeSection(index);
-            }
-        }
-
-        function changeSection(index) {
-            // Remove active class from all links and contents
-            tabLinks.forEach(l => l.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
-            
-            // Add active class to current section
-            const sectionId = sections[index];
-            const activeLink = document.querySelector(`[data-tab="${sectionId}"]`);
-            const activeContent = document.getElementById(sectionId);
-            
-            if (activeLink && activeContent) {
-                activeLink.classList.add('active');
-                activeContent.classList.add('active');
-                currentSectionIndex = index;
-            }
-            
-            // Smooth scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Handle wheel events for section navigation
-        let isScrolling = false;
-        window.addEventListener('wheel', (e) => {
-            if (isScrolling) return;
-            
-            isScrolling = true;
-            setTimeout(() => { isScrolling = false; }, 2000); // Increased timeout for transition
-            
-            if (e.deltaY > 0) {
-                // Scrolling down
-                if (currentSectionIndex < sections.length - 1) {
-                    showSection(currentSectionIndex + 1, true);
-                }
-            } else {
-                // Scrolling up
-                if (currentSectionIndex > 0) {
-                    showSection(currentSectionIndex - 1, true);
-                }
-            }
-        });
-
-        // Handle tab clicks (no transition for direct clicks)
-        tabLinks.forEach((link, index) => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const tabId = link.getAttribute('data-tab');
-                const sectionIndex = sections.indexOf(tabId);
-                if (sectionIndex !== -1) {
-                    showSection(sectionIndex, false);
-                }
-            });
-        });
-
-        // Handle keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-                e.preventDefault();
-                if (currentSectionIndex < sections.length - 1) {
-                    showSection(currentSectionIndex + 1, true);
-                }
-            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-                e.preventDefault();
-                if (currentSectionIndex > 0) {
-                    showSection(currentSectionIndex - 1, true);
-                }
-            }
-        });
-
-        // Language selector events
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load saved language or default
-            const savedLang = localStorage.getItem('naturafy-language') || 'es';
-            currentLanguage = savedLang;
-            updateLanguageDisplay();
-
-            // Add language selector events
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const lang = this.getAttribute('data-lang');
-                    changeLanguage(lang);
-                });
-            });
-        });
-    </script>
+  // Primera carga: no transition element to update
+  </script>
 </body>
 </html>
