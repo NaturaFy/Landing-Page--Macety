@@ -58,44 +58,39 @@
     .btn-green:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(76,175,80,.45)}
     .btn-green.centered{display:block;width:max-content;margin:1.5rem auto 0}
     /* HOW IT WORKS */
-    .how-it-works{max-width:1000px;margin:3rem auto;padding:2rem}
-    .section-subtitle{font-size:2rem;color:var(--green-700);margin-bottom:1.75rem}
-    .steps-container{background:#fff;border-radius:15px;padding:2rem 1.5rem;box-shadow:var(--shadow)}
-    .process-progress{width:100%;height:6px;background:#e8e8e8;border-radius:999px;margin:0 0 1rem;overflow:hidden}
-    .progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--green-700));border-radius:999px;width:0%;transition:width .9s var(--ease)}
-    .step-item{display:flex;align-items:center;gap:1.25rem;padding:1.25rem 0;position:relative;opacity:.35;transform:translateX(-18px);transition:all 1s var(--ease)}
-    .step-item.active{opacity:1;transform:translateX(0)}
-    .step-item.completed{opacity:1;transform:translateX(0)}
-    .step-number{width:52px;height:52px;border-radius:50%;background:#e0e0e0;border:3px solid #e0e0e0;display:flex;align-items:center;justify-content:center;font-weight:800;color:#888;flex-shrink:0}
-    .step-item.active .step-number{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 0 18px rgba(76,175,80,.35);animation:pulse-step 2s infinite}
-    .step-item.completed .step-number{background:var(--green-700);border-color:var(--green-700);color:transparent;position:relative}
-    .step-item.completed .step-number:after{content:'✓';position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:1.3rem;animation:pop .6s var(--ease)}
-    @keyframes pulse-step{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-    @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
-    .step-item:not(:last-child)::after{content:'';position:absolute;left:26px;top:64px;width:3px;height:50px;background:#e0e0e0}
-    .step-item.completed:not(:last-child)::after{background:linear-gradient(var(--green-700),var(--green))}
-    .step-text h3{color:var(--green-700);margin-bottom:.25rem;font-size:1.15rem}
-    .step-item.active .step-text h3{color:var(--green)}
-    .step-text p{color:var(--muted);line-height:1.6}
+  .how-it-works{max-width:960px;margin:2.25rem auto;padding:1.5rem}
+  .section-subtitle{font-size:1.85rem;color:var(--green-700);margin-bottom:1.25rem}
+  .steps-container{background:#fff;border-radius:14px;padding:1.25rem 1rem;box-shadow:0 8px 20px rgba(0,0,0,.06)}
+  .process-progress{width:100%;height:3px;background:#eceff1;border-radius:999px;margin:0 0 1rem;overflow:hidden}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--green),#6bc975);border-radius:999px;width:0%;transition:width .6s var(--ease)}
+  .step-item{display:flex;align-items:flex-start;gap:.9rem;padding:.9rem 0;position:relative;opacity:.6;transform:none;transition:opacity .3s var(--ease)}
+  .step-item.active,.step-item.completed{opacity:1}
+  .step-number{width:36px;height:36px;border-radius:50%;background:#fff;border:2px solid #d1d5db;display:flex;align-items:center;justify-content:center;font-weight:800;color:#6b7280;flex-shrink:0}
+  .step-item.active .step-number{background:var(--green);border-color:var(--green);color:#fff}
+  .step-item.completed .step-number{background:var(--green);border-color:var(--green);color:transparent;position:relative}
+  .step-item.completed .step-number:after{content:'✓';position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:1rem}
+
+  .step-text h3{color:var(--green-700);margin-bottom:.15rem;font-size:1.05rem}
+  .step-item.active .step-text h3{color:var(--green)}
+  .step-text p{color:#65707a;line-height:1.6;font-size:.95rem}
     .description-text{color:var(--muted);text-align:center;max-width:800px;margin:1.25rem auto 0;line-height:1.75}
     /* SMART CARE */
-    .smart-care-section{background:var(--bg);padding:3rem 2rem}
+  .smart-care-section{background:var(--bg);padding:3rem 2rem}
     .powered-by{text-align:center;max-width:800px;margin:0 auto 1.6rem}
     .powered-by h3{font-size:1.85rem;color:var(--green-700);margin-bottom:.4rem}
     .smart-features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;max-width:1200px;margin:0 auto}
-    .smart-feature{background:#fff;padding:1.5rem;border-radius:15px;text-align:center;box-shadow:var(--shadow)}
-    .smart-icon{font-size:2rem;margin-bottom:.6rem}
-    .smart-feature h4{color:var(--green-700);margin-bottom:.4rem;font-size:1.05rem}
-    .smart-feature p{color:var(--muted);line-height:1.55;font-size:.95rem}
+  .smart-feature{background:#fff;padding:1.35rem;border-radius:12px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.06);border:1px solid #eef2ee}
+  .smart-icon{font-size:1.6rem;margin-bottom:.5rem}
+  .smart-feature h4{color:var(--green-700);margin-bottom:.25rem;font-size:1rem}
+  .smart-feature p{color:#667085;line-height:1.55;font-size:.95rem}
     /* FUNCIONALIDADES */
-    .funcionalidades-details{max-width:1200px;margin:3rem auto;padding:2rem}
-    .functionality-row{display:grid;grid-template-columns:1fr 1fr;gap:2.2rem;margin-bottom:2.8rem;align-items:center}
-    .functionality-row.reverse{direction:rtl}.functionality-row.reverse>*{direction:ltr}
-    .functionality-text h3{color:var(--green-700);font-size:1.4rem;margin-bottom:.5rem}
-    .functionality-text p{color:var(--muted);line-height:1.75}
-    .functionality-image{background:#e8f5e9;border-radius:var(--radius);padding:2rem;display:flex;align-items:center;justify-content:center;min-height:220px}
-    .functionality-image img{max-width:150px;height:auto}
-    .icon-placeholder{display:flex;align-items:center;justify-content:center}
+  .funcionalidades-details{max-width:960px;margin:2rem auto;padding:0 1.25rem}
+  .functionality-row{display:block;background:#fff;border:1px solid #eee;border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:1rem;box-shadow:0 6px 16px rgba(0,0,0,.05)}
+  .functionality-row.reverse{direction:ltr}
+  .functionality-text h3{color:var(--green-700);font-size:1.05rem;margin-bottom:.25rem}
+  .functionality-text p{color:#667085;line-height:1.65;font-size:.95rem}
+  .functionality-image{display:none}
+  .icon-placeholder{display:none}
     /* MACETY AI (se mantiene tu estética futurista) */
     .macety-section{background:linear-gradient(135deg,#0a0a0a 0%,#1a1a2e 25%,#16213e 50%,#0f3460 75%,#1a1a2e 100%);min-height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4rem 2rem}
     .macety-section::before{content:'';position:absolute;inset:0;background:
@@ -120,9 +115,15 @@
     .macety-cta{display:inline-flex;align-items:center;gap:.7rem;background:linear-gradient(135deg,var(--green),#00c8ff);color:#fff;padding:.9rem 1.8rem;border-radius:999px;text-decoration:none;font-weight:900;font-size:1.05rem;transition:all .25s var(--ease);box-shadow:0 12px 28px rgba(76,175,80,.35);position:relative;overflow:hidden}
     .macety-cta:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(76,175,80,.45)}
     .macety-visual{display:flex;align-items:center;justify-content:center;padding:1rem}
-    .macety-ai-container{position:relative;width:380px;height:380px;border-radius:50%;background:linear-gradient(135deg,rgba(76,175,80,.1),rgba(0,200,255,.08)),radial-gradient(circle,rgba(76,175,80,.07) 0%,transparent 70%);border:2px solid rgba(76,175,80,.35);display:grid;place-items:center;animation:rotate 30s linear infinite}
-    @keyframes rotate{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-    .macety-image{width:280px;height:280px;border-radius:50%;object-fit:cover;box-shadow:0 0 60px rgba(76,175,80,.4),inset 0 0 60px rgba(76,175,80,.12);animation:float 6s ease-in-out infinite}
+    .macety-ai-container{position:relative;width:380px;height:380px;border-radius:50%;background:linear-gradient(135deg,rgba(76,175,80,.10),rgba(0,200,255,.12)),radial-gradient(circle,rgba(76,175,80,.06) 0%,transparent 70%);border:2px solid rgba(76,175,80,.35);display:grid;place-items:center;overflow:hidden}
+    /* Sensor scan overlay (conic wedge) */
+    .macety-ai-container::after{content:"";position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(from 0deg, rgba(0,200,255,.18) 0deg, rgba(0,200,255,0) 40deg 360deg);animation:sweep 4s linear infinite;mix-blend-mode:screen;pointer-events:none;filter:blur(0.2px)}
+    /* Soft grid/rings for sensor feel */
+    .macety-ai-container::before{content:"";position:absolute;inset:14px;border-radius:50%;background:
+      radial-gradient(circle at center, rgba(255,255,255,.12) 1px, transparent 1px);
+      background-size:22px 22px;opacity:.12;mix-blend-mode:screen;pointer-events:none}
+    @keyframes sweep{to{transform:rotate(360deg)}}
+    .macety-image{width:280px;height:280px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px rgba(255,255,255,.08),0 0 28px rgba(0,200,255,.22),0 0 60px rgba(76,175,80,.35),inset 0 0 60px rgba(76,175,80,.12);animation:float 6s ease-in-out infinite;filter:saturate(1.06) contrast(1.06)}
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
     /* RESOURCES */
     .resources-section{background:linear-gradient(135deg,#e8f4fd 0%,#f5f9ff 100%);min-height:100vh;display:flex;align-items:center;padding:4rem 2rem}
@@ -246,11 +247,9 @@
       <p class="description-text" data-translate="how.desc">
         Naturafy te permite organizar las plantas de tu hogar u oficina para mantenerlas siempre saludables.
       </p>
-      <a href="#" class="btn-green centered" data-translate="how.cta">Comenzar ahora</a>
     </section>
 
     <section class="smart-care-section">
-      <h2 class="section-subtitle" data-translate="smart.title">Naturafy: Smart Plant Care</h2>
       <div class="powered-by">
         <h3 data-translate="smart.powered">Impulsado por MaceTy</h3>
         <p data-translate="smart.text">MaceTy combina IoT y sostenibilidad para el cuidado de plantas.</p>
@@ -276,7 +275,7 @@
     </section>
 
     <section class="funcionalidades-details">
-      <h2 class="section-subtitle" data-translate="feat.title">Funcionalidades</h2>
+  <h2 class="section-subtitle" style="margin-bottom:.75rem" data-translate="feat.title">Funcionalidades</h2>
 
       <div class="functionality-row">
         <div class="functionality-text">
@@ -337,16 +336,16 @@
     <section class="macety-section">
       <div class="macety-container">
         <div class="macety-content">
-          <div class="macety-badge" data-translate="ai.badge">🤖 Inteligencia Artificial</div>
+          <div class="macety-badge" data-translate="ai.badge">Asistente Personalizado</div>
           <h1 class="macety-title" data-translate="ai.title">Conoce a Macety AI</h1>
           <p class="macety-subtitle" data-translate="ai.subtitle">Tu asistente virtual inteligente para el cuidado de plantas.</p>
           <div class="macety-features">
-            <div class="macety-feature"><div class="feature-icon">🧠</div><div class="feature-text" data-translate="ai.f1">Análisis predictivo del estado de tus plantas</div></div>
-            <div class="macety-feature"><div class="feature-icon">💬</div><div class="feature-text" data-translate="ai.f2">Conversación natural e interactiva</div></div>
-            <div class="macety-feature"><div class="feature-icon">📊</div><div class="feature-text" data-translate="ai.f3">Recomendaciones personalizadas en tiempo real</div></div>
-            <div class="macety-feature"><div class="feature-icon">🌱</div><div class="feature-text" data-translate="ai.f4">Optimización automática del cuidado</div></div>
+            <div class="macety-feature"><div class="feature-text" data-translate="ai.f1">Análisis predictivo del estado de tus plantas</div></div>
+            <div class="macety-feature"><div class="feature-text" data-translate="ai.f2">Conversación natural e interactiva</div></div>
+            <div class="macety-feature"><div class="feature-text" data-translate="ai.f3">Recomendaciones personalizadas en tiempo real</div></div>
+            <div class="macety-feature"><div class="feature-text" data-translate="ai.f4">Optimización automática del cuidado</div></div>
           </div>
-          <a href="#" class="macety-cta" data-translate="ai.cta">Hablar con Macety →</a>
+          <a href="#" class="macety-cta" data-translate="ai.cta">Pruebalo al comprar un dispositivo Naturafy</a>
         </div>
         <div class="macety-visual">
           <div class="macety-ai-container">
@@ -368,11 +367,11 @@
             <div class="showcase-info"><h3>Elena's Urban Oasis</h3><p>Elena transformó su apartamento con Naturafy.</p></div>
           </div>
           <div class="showcase-card">
-            <div class="showcase-image light-bg"><img src="./assets/plant.webp" class="showcase-plant center" alt=""></div>
+            <div class="showcase-image light-bg"><img src="./assets/community2.jpeg" class="showcase-plant center" alt=""></div>
             <div class="showcase-info"><h3>Carlos's Balcony Garden</h3><p>Carlos creó un oasis verde en su balcón.</p></div>
           </div>
           <div class="showcase-card">
-            <div class="showcase-image sage-bg"><img src="./assets/plant.webp" class="showcase-plant tall" alt=""></div>
+            <div class="showcase-image sage-bg"><img src="./assets/community3.jpg" class="showcase-plant tall" alt=""></div>
             <div class="showcase-info"><h3>Sofia's Indoor Jungle</h3><p>Sofía llevó la naturaleza al interior con su maceta inteligente.</p></div>
           </div>
         </div>
@@ -642,26 +641,26 @@
       function animate(){
         steps.forEach(s=>s.classList.remove('active','completed'));
         for(let i=0;i<currentStep;i++){
-          setTimeout(()=>{ steps[i].classList.add('completed'); progressFill.style.width = ((i+1)/steps.length*100)+'%'; }, i*150);
+          setTimeout(()=>{ steps[i].classList.add('completed'); progressFill.style.width = ((i+1)/steps.length*100)+'%'; }, i*120);
         }
         if(currentStep<steps.length){
           setTimeout(()=>{
             steps[currentStep].classList.add('active');
             progressFill.style.width = ((currentStep+1)/steps.length*100)+'%';
-          }, currentStep*150+200);
+          }, currentStep*120+120);
         }
         setTimeout(()=>{
           currentStep++;
           if(currentStep>steps.length){
             progressFill.style.width='100%';
-            setTimeout(()=>{ currentStep=0; progressFill.style.width='0%'; }, 1600);
+            setTimeout(()=>{ currentStep=0; progressFill.style.width='0%'; }, 1200);
           } else { /* loop continúa */ }
-        }, 1200);
+        }, 900);
       }
 
       const rect = container.getBoundingClientRect();
       const visible = rect.top < window.innerHeight && rect.bottom > 0;
-      if(force || visible) { animate(); clearInterval(window.__stepsTimer); window.__stepsTimer=setInterval(animate, 4200); }
+  if(force || visible) { animate(); clearInterval(window.__stepsTimer); window.__stepsTimer=setInterval(animate, 3200); }
     }
 
     window.addEventListener('scroll',()=>{ if(currentSectionIndex===1) startStepsAnimation(); });
