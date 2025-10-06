@@ -1,4 +1,5 @@
 const twilio = require('twilio');
+const nodemailer = require('nodemailer');
 
 exports.handler = async (event, context) => {
   // Solo permitir POST
@@ -10,8 +11,31 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Parsear el body
-    const { telefono, nombre } = JSON.parse(event.body);
+    const { nombre, email, telefono, mensaje } = JSON.parse(event.body);
+
+    // 1. Configurar email (usando Gmail, Outlook, etc.)
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,     // tu@email.com
+        pass: process.env.EMAIL_PASSWORD  // Tu contraseña de aplicación
+      }
+    });
+
+    // 2. Enviar email a ti
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: 'maycoljhordan07@gmail.com', 
+      subject: '🌱 Nuevo Registro en Naturafy',
+      html: `
+        <h2>Nuevo Registro</h2>
+        <p><strong>Nombre:</strong> ${nombre}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Teléfono:</strong> ${telefono}</p>
+        <p><strong>Mensaje:</strong> ${mensaje || 'Sin mensaje'}</p>
+        <p><strong>Fecha:</strong> ${new Date().toLocaleString('es-PE')}</p>
+      `
+    });
 
     // Validar teléfono
     if (!telefono || !telefono.startsWith('+')) {
