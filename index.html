@@ -774,8 +774,10 @@
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
+                nombre: firstName,
+                email: email,
                 telefono: telefono,
-                nombre: firstName
+                mensaje: message
               })
             });
 
