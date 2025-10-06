@@ -471,8 +471,8 @@
               <input id="lastName" name="lastName" type="text" placeholder="Apellido" data-ph="form.lastName" required>
             </div>
             <div class="form-field">
-              <label for="phone" data-translate="form.phone">Telefono</label>
-              <input id="phone" name="phone" type="tel" placeholder="Número" data-ph="form.phone">
+              <label for="telefono" data-translate="form.phone">Teléfono</label>
+              <input id="telefono" name="telefono" type="tel" placeholder="999 888 777" data-ph="form.phone" maxlength="9" pattern="[0-9]{9}">
             </div>
             <div class="form-field">
               <label for="email" data-translate="form.email">Correo</label>
@@ -549,7 +549,7 @@
   "resources.title":"Lleva a Macety contigo: móvil y web","resources.subtitle":"Usa el asistente en tu teléfono y en la app web. Notificaciones, historial y alertas en tiempo real.","resources.download":"Descargar la app","resources.ios":"Descargar en iOS","resources.android":"Descargar en Android","resources.web":"Abrir app web","notice.dev":"App en desarrollo. Pronto vendrán cosas nuevas.","notice.events":"Pronto nuevos eventos y comunidad." ,
         "contact.title":"Contacta Naturafy","contact.subtitle":"Disponible en móvil y web, siempre con Macety como asistente virtual","contact.text":"Estamos listos para ayudarte con cualquier consulta sobre Naturafy y el cuidado de tus plantas.","contact.cta":"Contáctanos",
         "footer.rights":"Todos los derechos reservados.","footer.tagline":"Tecnología que conecta con la naturaleza 🌱",
-        "form.firstName":"Nombre","form.lastName":"Apellido","form.phone":"Número","form.email":"Correo","form.message":"Mensaje","form.submit":"Enviar","form.success":"¡Gracias! Hemos recibido tu mensaje.","form.error":"Por favor, completa los campos requeridos correctamente."
+        "form.firstName":"Nombre","form.lastName":"Apellido","form.phone":"Teléfono","form.email":"Correo","form.message":"Mensaje","form.submit":"Enviar","form.success":"¡Gracias! Hemos recibido tu mensaje.","form.error":"Por favor, completa los campos requeridos correctamente."
       },
       en: {
         "meta.title":"Naturafy - Smart Plant Care",
@@ -693,29 +693,121 @@
     }
     wireStoreButtons();
 
-    // Contact form handling (client-side only)
+    // Contact form handling (sends SMS via Netlify function)
     const contactForm = document.getElementById('contactForm');
     if(contactForm){
-      contactForm.addEventListener('submit',(e)=>{
+      // Formateo automático del teléfono peruano
+      const telefonoInput = document.getElementById('telefono');
+      if(telefonoInput){
+        telefonoInput.addEventListener('input', (e) => {
+          let value = e.target.value.replace(/\D/g, ''); // Solo números
+          if(value.length > 9) value = value.substring(0, 9); // Máximo 9 dígitos
+          
+          // Formatear con espacios: 999 888 777
+          if(value.length >= 6) {
+            value = value.substring(0, 3) + ' ' + value.substring(3, 6) + ' ' + value.substring(6);
+          } else if(value.length >= 3) {
+            value = value.substring(0, 3) + ' ' + value.substring(3);
+          }
+          
+          e.target.value = value;
+        });
+
+        // Evitar caracteres no numéricos
+        telefonoInput.addEventListener('keypress', (e) => {
+          if(!/[0-9]/.test(e.key) && !['Backspace', 'Delete', 'Tab', 'Enter', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+            e.preventDefault();
+          }
+        });
+      }
+
+      contactForm.addEventListener('submit', async (e)=>{
         e.preventDefault();
         const form = e.currentTarget;
         const statusEl = document.getElementById('formStatus');
+        const submitBtn = form.querySelector('button[type="submit"]');
         const data = new FormData(form);
+        
         const firstName = (data.get('firstName')||'').toString().trim();
         const lastName = (data.get('lastName')||'').toString().trim();
+        const telefonoRaw = (data.get('telefono')||'').toString().trim();
         const email = (data.get('email')||'').toString().trim();
         const message = (data.get('message')||'').toString().trim();
+        
+        // Procesar teléfono: agregar +51 automáticamente si es número peruano de 9 dígitos
+        let telefono = '';
+        if(telefonoRaw){
+          const numeroLimpio = telefonoRaw.replace(/\D/g, ''); // Quitar espacios y caracteres
+          if(numeroLimpio.length === 9){
+            telefono = '+51' + numeroLimpio; // Agregar prefijo peruano
+          } else if(numeroLimpio.startsWith('51') && numeroLimpio.length === 11){
+            telefono = '+' + numeroLimpio; // Ya tiene el 51, solo agregar +
+          } else if(telefonoRaw.startsWith('+')){
+            telefono = telefonoRaw; // Ya tiene formato internacional
+          } else {
+            statusEl.textContent = 'El teléfono debe tener 9 dígitos';
+            statusEl.style.color = '#b45309';
+            return;
+          }
+        }
+        
+        // Validaciones básicas
         const emailOk = /.+@.+\..+/.test(email);
         if(!firstName || !lastName || !emailOk || !message){
           statusEl.textContent = t('form.error');
           statusEl.style.color = '#b45309';
           return;
         }
-        // Simulate success
-        statusEl.textContent = t('form.success');
-        statusEl.style.color = '#065f46';
-        form.reset();
-        updateLanguageDisplay(); // reset placeholders after clear
+
+        // Deshabilitar botón durante envío
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enviando...';
+        statusEl.textContent = '';
+
+        try {
+          // Intentar enviar SMS si hay teléfono
+          if(telefono){
+            const smsResponse = await fetch('/.netlify/functions/enviar-sms', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                telefono: telefono,
+                nombre: firstName
+              })
+            });
+
+            const smsResult = await smsResponse.json();
+            
+            if(smsResult.success){
+              statusEl.textContent = t('form.success') + ' SMS enviado correctamente.';
+              statusEl.style.color = '#065f46';
+            } else {
+              statusEl.textContent = t('form.success') + ' (SMS no enviado: ' + smsResult.error + ')';
+              statusEl.style.color = '#065f46';
+            }
+          } else {
+            // Sin teléfono, solo mostrar mensaje de éxito
+            statusEl.textContent = t('form.success');
+            statusEl.style.color = '#065f46';
+          }
+          
+          form.reset();
+          updateLanguageDisplay(); // reset placeholders after clear
+          
+        } catch (error) {
+          console.error('Error enviando SMS:', error);
+          statusEl.textContent = t('form.success') + ' (SMS no enviado)';
+          statusEl.style.color = '#065f46';
+          form.reset();
+          updateLanguageDisplay();
+        } finally {
+          // Rehabilitar botón
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
       });
     }
 
