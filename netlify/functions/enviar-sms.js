@@ -51,211 +51,207 @@ exports.handler = async (event, context) => {
     });
 
     // 3. Email de AGRADECIMIENTO para el USUARIO
-    await transporter.sendMail({
-      from: `"Naturafy 🌱" <${process.env.EMAIL_USER}>`,
-      to: email,
-      subject: '🌱 ¡Bienvenido a Naturafy!',
-      html: `
-        <!DOCTYPE html>
-        <html lang="es">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <style>
-            body {
-              margin: 0;
-              padding: 0;
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-              background-color: #f5f5f5;
-            }
-            .container {
-              max-width: 600px;
-              margin: 0 auto;
-              background: linear-gradient(135deg, #7fda89 0%, #6bc975 100%);
-              border-radius: 20px;
-              overflow: hidden;
-            }
-            .header {
-              background: rgba(255, 255, 255, 0.2);
-              padding: 40px 20px;
-              text-align: center;
-            }
-            .logo-container {
-              background: white;
-              width: 180px;
-              height: 180px;
-              border-radius: 50%;
-              margin: 0 auto 20px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            }
-            .mascot-image {
-              width: 160px;
-              height: 160px;
-              object-fit: contain;
-            }
-            .header h1 {
-              color: white;
-              font-size: 32px;
-              margin: 0;
-              text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .content {
-              background: white;
-              padding: 40px 30px;
-              text-align: center;
-            }
-            .greeting {
-              color: #2d5016;
-              font-size: 24px;
-              font-weight: bold;
-              margin-bottom: 20px;
-            }
-            .message {
-              color: #555;
-              font-size: 16px;
-              line-height: 1.8;
-              margin-bottom: 30px;
-            }
-            .features {
-              display: table;
-              width: 100%;
-              margin: 30px 0;
-            }
-            .feature {
-              background: #f8fdf9;
-              border-left: 4px solid #4CAF50;
-              padding: 15px 20px;
-              margin-bottom: 15px;
-              text-align: left;
-              border-radius: 0 10px 10px 0;
-            }
-            .feature-icon {
-              font-size: 24px;
-              margin-right: 10px;
-            }
-            .feature-text {
-              color: #2d5016;
-              font-weight: 600;
-              font-size: 15px;
-            }
-            .cta-button {
-              display: inline-block;
-              background: #4CAF50;
-              color: white;
-              padding: 15px 40px;
-              text-decoration: none;
-              border-radius: 30px;
-              font-weight: 600;
-              font-size: 16px;
-              margin: 20px 0;
-              box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-            }
-            .footer {
-              background: #2d5016;
-              color: white;
-              padding: 30px;
-              text-align: center;
-              font-size: 14px;
-            }
-            .footer a {
-              color: #7fda89;
-              text-decoration: none;
-            }
-            .social-icons {
-              margin: 20px 0;
-            }
-            .social-icons a {
-              display: inline-block;
-              margin: 0 10px;
-              color: white;
-              text-decoration: none;
-              font-size: 20px;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <!-- Header -->
-            <div class="header">
-              <div class="logo-container">
-                <img src="https://naturafy.netlify.app/assets/macety.png" alt="Macety" class="mascot-image" />
-              </div>
-              <h1>¡Bienvenido a Naturafy! 🌱</h1>
-            </div>
+await transporter.sendMail({
+  from: `"Naturafy 🌱" <${process.env.EMAIL_USER}>`,
+  to: email,
+  subject: '🌿 Gracias por contactarte con Naturafy',
+  html: `
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Naturafy - Contacto</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f5f7f4;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
 
-            <!-- Content -->
-            <div class="content">
-              <div class="greeting">
-                ¡Hola ${nombre}! 👋
-              </div>
-              
-              <div class="message">
-                Soy <strong>Macety</strong>, tu amiguita verde 💚 y estoy súper emocionada de que te unas a nuestra comunidad de amantes de las plantas.
-              </div>
+      .container {
+        max-width: 640px;
+        margin: 40px auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
 
-              <div class="message">
-                En Naturafy, combinamos tecnología IoT con amor por la naturaleza para que tus plantas siempre estén felices y saludables 🌿✨
-              </div>
+      .header {
+        background: linear-gradient(135deg, #7fda89, #5ebf70);
+        text-align: center;
+        padding: 40px 20px 20px;
+      }
 
-              <!-- Features -->
-              <div class="features">
-                <div class="feature">
-                  <span class="feature-icon">🌡️</span>
-                  <span class="feature-text">Monitoreo en tiempo real</span>
-                </div>
-                <div class="feature">
-                  <span class="feature-icon">💧</span>
-                  <span class="feature-text">Riego automático inteligente</span>
-                </div>
-                <div class="feature">
-                  <span class="feature-icon">☀️</span>
-                  <span class="feature-text">Energía solar sostenible</span>
-                </div>
-                <div class="feature">
-                  <span class="feature-icon">📱</span>
-                  <span class="feature-text">Control desde tu móvil</span>
-                </div>
-              </div>
+      .logo-wrapper {
+        width: 140px;
+        height: 140px;
+        background: #ffffff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      }
 
-              <div class="message">
-                Pronto nos pondremos en contacto contigo para ayudarte a comenzar tu viaje verde 🌱
-              </div>
+      .logo-wrapper img {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+        border-radius: 50%;
+      }
 
-              <a href="https://naturafy.netlify.app/" class="cta-button">
-                Explorar Naturafy
-              </a>
+      .header h1 {
+        color: #ffffff;
+        font-size: 28px;
+        margin: 10px 0 5px;
+      }
 
-              <div style="margin-top: 30px; color: #999; font-size: 14px;">
-                <em>"Cultivando buenas energías, una planta a la vez" 🌿</em>
-              </div>
-            </div>
+      .content {
+        padding: 40px 35px;
+        text-align: center;
+      }
 
-            <!-- Footer -->
-            <div class="footer">
-              <div class="social-icons">
-                <a href="#" title="Instagram">📷</a>
-                <a href="#" title="Facebook">📘</a>
-                <a href="#" title="WhatsApp">💬</a>
-              </div>
-              
-              <p>
-                <strong>Naturafy</strong><br>
-                Technology that connects with nature 🌱
-              </p>
-              
-              <p style="font-size: 12px; margin-top: 20px; opacity: 0.8;">
-                Recibiste este email porque te registraste en Naturafy.<br>
-                Si tienes alguna pregunta, responde a este correo.
-              </p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `
-    });
+      .greeting {
+        font-size: 22px;
+        color: #2d5016;
+        font-weight: 600;
+        margin-bottom: 15px;
+      }
+
+      .message {
+        color: #444;
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 25px;
+      }
+
+      .features {
+        text-align: left;
+        margin: 30px 0;
+      }
+
+      .feature {
+        background: #f4faf5;
+        padding: 12px 18px;
+        border-left: 4px solid #4caf50;
+        border-radius: 0 12px 12px 0;
+        margin-bottom: 10px;
+      }
+
+      .feature span {
+        font-size: 16px;
+        color: #2d5016;
+        font-weight: 600;
+      }
+
+      .cta-button {
+        background: #4caf50;
+        color: white;
+        padding: 14px 36px;
+        border-radius: 28px;
+        font-weight: 600;
+        font-size: 16px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 10px;
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        transition: background 0.3s ease;
+      }
+
+      .cta-button:hover {
+        background: #43a047;
+      }
+
+      .footer {
+        background: #2d5016;
+        color: white;
+        padding: 25px;
+        text-align: center;
+        font-size: 14px;
+      }
+
+      .footer a {
+        color: #7fda89;
+        text-decoration: none;
+      }
+
+      .social-icons {
+        margin: 15px 0;
+      }
+
+      .social-icons a {
+        margin: 0 8px;
+        text-decoration: none;
+        font-size: 20px;
+        color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <div class="logo-wrapper">
+          <img src="https://naturafy.netlify.app/assets/macety.png" alt="Macety Mascota Naturafy" />
+        </div>
+        <h1>¡Gracias por escribirnos! 🌱</h1>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <div class="greeting">¡Hola ${nombre}! 👋</div>
+        <div class="message">
+          Soy <strong>Macety</strong>, tu amiguita verde 💚.  
+          Hemos recibido tu mensaje desde la página de contacto de <strong>Naturafy</strong> y nuestro equipo te responderá muy pronto.
+        </div>
+
+        <div class="message">
+          Mientras tanto, te contamos que Naturafy usa tecnología <strong>IoT</strong> para cuidar tus plantas de forma automática y sostenible 🌿☀️
+        </div>
+
+        <div class="features">
+          <div class="feature"><span>🌡️ Monitoreo de temperatura y humedad</span></div>
+          <div class="feature"><span>💧 Riego automático inteligente</span></div>
+          <div class="feature"><span>☀️ Alimentación solar ecoamigable</span></div>
+          <div class="feature"><span>📱 Control total desde tu app móvil</span></div>
+        </div>
+
+        <div class="message">
+          Gracias por interesarte en nuestro proyecto verde.  
+          Si deseas conocer más sobre nuestras soluciones inteligentes, puedes visitar nuestra web:
+        </div>
+
+        <a href="https://naturafy.netlify.app/" class="cta-button">Explorar Naturafy</a>
+
+        <div style="margin-top: 35px; color: #888; font-size: 14px;">
+          <em>“Cultivando buenas energías, una planta a la vez” 🌿</em>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <div class="social-icons">
+          <a href="#" title="Instagram">📷</a>
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="WhatsApp">💬</a>
+        </div>
+        <p><strong>Naturafy</strong><br> Tecnología que conecta con la naturaleza 🌱</p>
+        <p style="font-size: 12px; opacity: 0.8;">
+          Este correo fue generado desde el formulario de contacto de Naturafy.<br />
+          Si no fuiste tú, simplemente ignóralo 🌿
+        </p>
+      </div>
+    </div>
+  </body>
+  </html>
+  `,
+});
+
 
     // 4. Enviar SMS con Twilio
     const twilioClient = twilio(
